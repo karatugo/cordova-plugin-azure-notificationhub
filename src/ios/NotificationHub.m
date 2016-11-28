@@ -43,7 +43,7 @@
 {
     self.notificationHubPath = [command.arguments objectAtIndex:0];
     self.connectionString = [command.arguments objectAtIndex:1];
-    self.tags = [command.arguments objectAtIndex:3];
+    self.tag = [command.arguments objectAtIndex:3];
     
     self.callbackId = command.callbackId;
     
@@ -53,8 +53,8 @@
     } else {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes: UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound];
     }
-	
-	[[UIApplication sharedApplication] registerForRemoteNotifications];    
+
+    [[UIApplication sharedApplication] registerForRemoteNotifications];
 }
 
 - (void)unregisterApplication:(CDVInvokedUrlCommand*)command
@@ -89,7 +89,7 @@
     SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString:
                               self.connectionString notificationHubPath:self.notificationHubPath];
 
-    [hub registerNativeWithDeviceToken:deviceToken tags: [NSSet setWithObjects: self.tags, nil] completion:^(NSError* error) {
+    [hub registerNativeWithDeviceToken:deviceToken tags:[NSSet setWithObjects:self.tag, nil] completion:^(NSError* error) {
         if (error != nil) {
             [self failWithError:error];
             return;
@@ -120,7 +120,7 @@
     SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString:
                               self.connectionString notificationHubPath:self.notificationHubPath];
 
-    [hub registerNativeWithDeviceToken:deviceToken tags:[NSSet setWithObjects: self.tags, nil] completion:^(NSError* error) {
+    [hub registerNativeWithDeviceToken:deviceToken tags:[NSSet setWithObjects:self.tag, nil] completion:^(NSError* error) {
         if (error != nil) {
             [self failWithError:error];
             return;
