@@ -43,6 +43,7 @@
 {
     self.notificationHubPath = [command.arguments objectAtIndex:0];
     self.connectionString = [command.arguments objectAtIndex:1];
+    self.tags = [command.arguments objectAtIndex:3];
     
     self.callbackId = command.callbackId;
     
@@ -88,7 +89,7 @@
     SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString:
                               self.connectionString notificationHubPath:self.notificationHubPath];
 
-    [hub registerNativeWithDeviceToken:deviceToken tags:nil completion:^(NSError* error) {
+    [hub registerNativeWithDeviceToken:deviceToken tags: [NSSet setWithObjects: self.tags, nil] completion:^(NSError* error) {
         if (error != nil) {
             [self failWithError:error];
             return;
@@ -119,7 +120,7 @@
     SBNotificationHub* hub = [[SBNotificationHub alloc] initWithConnectionString:
                               self.connectionString notificationHubPath:self.notificationHubPath];
 
-    [hub registerNativeWithDeviceToken:deviceToken tags:nil completion:^(NSError* error) {
+    [hub registerNativeWithDeviceToken:deviceToken tags:[NSSet setWithObjects: self.tags, nil] completion:^(NSError* error) {
         if (error != nil) {
             [self failWithError:error];
             return;
